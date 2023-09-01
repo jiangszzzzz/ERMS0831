@@ -40,3 +40,7 @@ def depart_edit(request, nid):
     models.Department.objects.filter(id=nid).update(title=title)
     return redirect("/depart/list/")
 
+
+def user_list(request):
+    queryset = models.User_info.objects.all()
+    return render(request, "user_list.html",{"queryset":queryset})

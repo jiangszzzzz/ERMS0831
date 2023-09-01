@@ -18,6 +18,8 @@ from django.urls import path
 from app01 import views
 
 urlpatterns = [
+
+    # 部门管理
     # path('admin/', admin.site.urls),
     path('depart/list/', views.depart_list),
     path('depart/add/', views.depart_add),
@@ -25,5 +27,8 @@ urlpatterns = [
     # 含有正则表达的
     # http://127.0.0.1:8000/depart/1/edit/
     path('depart/<int:nid>/edit/', views.depart_edit),
+
+    # 用户管理
+    path("user/list/",views.user_list),
 
 ]
