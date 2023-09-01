@@ -43,4 +43,4 @@ def depart_edit(request, nid):
 
 def user_list(request):
     queryset = models.User_info.objects.all()
-    return render(request, "user_list.html",{"queryset":queryset})
+    return render(request, "user_list.html", {"queryset": queryset})
