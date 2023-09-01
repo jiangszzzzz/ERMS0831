@@ -1,6 +1,5 @@
 # Djago 员工管理系统案例
 ---
-
 │  manage.py      startapp/ migrate<br>
 ├─app01<br>
 │  │  admin.py<br>
