@@ -1,5 +1,37 @@
-# ERMS0831
-Django web Bootstrap JQuery Mysql 
+# Djago 员工管理系统案例
+
+│  manage.py      startapp/ migrate
+├─app01
+│  │  admin.py
+│  │  apps.py
+│  │  models.py       orm class 
+│  │  tests.py
+│  │  views.py        return HTML
+│  │  __init__.py
+│  ├─migrations
+│  │  │  0001_initial.py
+│  │  │  __init__.py
+│  ├─static           css js ntml
+│  │  ├─css
+│  │  ├─img
+│  │  │      111.jpg
+│  │  │
+│  │  ├─js
+│  │  │      jquery-3.7.0.min.js
+│  │  │
+│  │  └─plugins
+│  │      └─bootstrap-3.4.1
+│  │
+│  ├─templates
+│  │      depart_add.html
+│  │      depart_edit.html
+│  │      depart_list.html
+└─ERMS0831
+    │  asgi.py
+    │  settings.py      database/  appsettings
+    │  urls.py          route
+    │  wsgi.py
+    │  __init__.py
 
 ## Django 开发 员工管理系统案例
 
