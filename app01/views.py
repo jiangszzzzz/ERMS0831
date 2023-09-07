@@ -44,3 +44,11 @@ def depart_edit(request, nid):
 def user_list(request):
     queryset = models.User_info.objects.all()
     return render(request, "user_list.html", {"queryset": queryset})
+
+
+def user_add(request):
+    context = {
+        "gender_choices": models.User_info.gender_choices,
+        "depart_list": models.Department.objects.all(),
+    }
+    return render(request, "user_add.html", context)
