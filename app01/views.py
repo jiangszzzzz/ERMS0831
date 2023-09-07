@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from app01 import models
+from django import forms
 
 
 def depart_list(request):
@@ -46,9 +47,45 @@ def user_list(request):
     return render(request, "user_list.html", {"queryset": queryset})
 
 
+# ##################################  modleForm 实现   ##################################
+class UserModleForm(forms.ModelForm):
+    name = forms.CharField(min_length=2, label="用户名")
+
+    # 生成前端输入框
+    class Meta:
+        model = models.User_info
+        fields = ["name", "gender", "password", "age", "account", "create_time", "depart", ]
+
+    # 给前端加上样式
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs = {"class": "form-control", "placeholder": field.label}
+
+
 def user_add(request):
-    context = {
-        "gender_choices": models.User_info.gender_choices,
-        "depart_list": models.Department.objects.all(),
-    }
-    return render(request, "user_add.html", context)
+    # if request.method == "GET":
+    #     context = {
+    #         "gender_choices": models.User_info.gender_choices,
+    #         "depart_list": models.Department.objects.all(),
+    #     }
+    #     return render(request, "user_add.html", context)
+
+    # 获取数据(原始方法)
+    # user = request.POST.get("name")......
+    # models.User_info.objects.create(name = user)
+
+    if request.method == "GET":
+        form = UserModleForm()
+        return render(request, "user_add.html", {"form": form})
+
+    # POST 提交数据校验
+    form = UserModleForm(data=request.POST)
+    # 添加校验
+    if form.is_valid():
+        # 存储到表里面
+        form.save()
+        return redirect("/user/list")
+
+    return render(request, "user_add.html", {"form": form})
