@@ -44,8 +44,9 @@
                     <td>{{ obj.create_time }}</td>
                     <td>{{ obj.depart.title }}</td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="">编 辑</a>
-                        <a class="btn btn-danger btn-xs" href="">删 除</a>
+                        <a class="btn btn-primary btn-xs" href="/user/{{ obj.id }}/edit/">编 辑</a>
+{#                        <a class="btn btn-danger btn-xs" href="/user/delete/?nid={{ obj.id }}">删 除</a>#}
+                        <a class="btn btn-danger btn-xs" href="/user/{{ obj.id }}/delete/">删 除</a>
                     </td>
                 </tr>
             {% endfor %}
