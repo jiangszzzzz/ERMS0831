@@ -116,3 +116,8 @@ def user_delete(request, nid):
     # nid = request.GET.get('nid')
     models.User_info.objects.filter(id=nid).delete()
     return redirect("/user/list/")
+
+
+def pretty_list(request):
+    queryset = models.PrettyNum.objects.all()
+    return render(request, "pretty_list.html", {"queryset": queryset})

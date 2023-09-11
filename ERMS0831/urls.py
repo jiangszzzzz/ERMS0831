@@ -35,5 +35,6 @@ urlpatterns = [
     # path('user/delete/', views.user_delete),
     path('user/<int:nid>/delete/', views.user_delete),
 
-
+    # 号码管理
+    path("pretty/list/", views.pretty_list),
 ]
