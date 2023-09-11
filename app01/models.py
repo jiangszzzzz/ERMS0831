@@ -38,7 +38,7 @@ class PrettyNum(models.Model):
     mobile = models.CharField(verbose_name="手机号", max_length=11)
     price = models.IntegerField(verbose_name="", default=0)
 
-    level_choices = ((1, "1级"), (1, "2级"), (1, "3级"), (1, "4级"),)
+    level_choices = ((1, "1级"), (2, "2级"), (3, "3级"), (4, "4级"),)
     level = models.SmallIntegerField(verbose_name="级别", choices=level_choices, default=1)
 
     status_choices = ((1, "已占用"), (2, "已占用"))

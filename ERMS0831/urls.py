@@ -37,4 +37,5 @@ urlpatterns = [
 
     # 号码管理
     path("pretty/list/", views.pretty_list),
+    path("pretty/add/", views.pretty_add),
 ]

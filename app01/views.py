@@ -119,5 +119,28 @@ def user_delete(request, nid):
 
 
 def pretty_list(request):
-    queryset = models.PrettyNum.objects.all()
+    # 相当于 select * from 表 order by level desc
+    queryset = models.PrettyNum.objects.all().order_by("-level")
+    # queryset = models.PrettyNum.objects.all()
     return render(request, "pretty_list.html", {"queryset": queryset})
+
+
+class PrettyNumModleForm(forms.ModelForm):
+    # name = forms.CharField(min_length=2, label="用户名")
+
+    # 生成前端输入框
+    class Meta:
+        model = models.PrettyNum
+        fields = ["mobile", "price", "level", "status", ]
+
+    # 给前端加上样式
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs = {"class": "form-control", "placeholder": field.label}
+
+
+def pretty_add(request):
+    form = PrettyNumModleForm()
+    return render(request, "pretty_add.html", {"form": form})
