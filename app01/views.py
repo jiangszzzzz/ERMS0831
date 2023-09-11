@@ -125,6 +125,7 @@ def pretty_list(request):
     return render(request, "pretty_list.html", {"queryset": queryset})
 
 
+############################## 靓号提交 先建form类
 class PrettyNumModleForm(forms.ModelForm):
     # name = forms.CharField(min_length=2, label="用户名")
 
@@ -142,5 +143,6 @@ class PrettyNumModleForm(forms.ModelForm):
 
 
 def pretty_add(request):
-    form = PrettyNumModleForm()
-    return render(request, "pretty_add.html", {"form": form})
+    if request.method == "GET":
+        form = PrettyNumModleForm()
+        return render(request, "pretty_add.html", {"form": form})
