@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from app01 import models
 from django import forms
+from django.core.validators import RegexValidator
 
 
 def depart_list(request):
@@ -128,6 +129,10 @@ def pretty_list(request):
 ############################## 靓号提交 先建form类
 class PrettyNumModleForm(forms.ModelForm):
     # name = forms.CharField(min_length=2, label="用户名")
+    mobile = forms.CharField(
+        label="手机号",
+        validators=[RegexValidator(r'^1[3-9]\d{9}$', '手机号格式错误')]
+    )
 
     # 生成前端输入框
     class Meta:
@@ -146,3 +151,11 @@ def pretty_add(request):
     if request.method == "GET":
         form = PrettyNumModleForm()
         return render(request, "pretty_add.html", {"form": form})
+
+    form = PrettyNumModleForm(data=request.POST)
+
+    if form.is_valid():
+        form.save()
+        return redirect('/pretty/list/')
+
+    return render(request, "pretty_add.html", {"form": form})
