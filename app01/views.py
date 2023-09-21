@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from app01 import models
 from django import forms
 from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 
 
 def depart_list(request):
@@ -129,10 +130,12 @@ def pretty_list(request):
 ############################## 靓号提交 先建form类
 class PrettyNumModleForm(forms.ModelForm):
     # name = forms.CharField(min_length=2, label="用户名")
-    mobile = forms.CharField(
-        label="手机号",
-        validators=[RegexValidator(r'^1[3-9]\d{9}$', '手机号格式错误')]
-    )
+    #####    验证方式一
+    ####     字段 + 正则匹配
+    # mobile = forms.CharField(
+    #     label="手机号",
+    #     validators=[RegexValidator(r'^1[3-9]\d{9}$', '手机号格式错误')]
+    # )
 
     # 生成前端输入框
     class Meta:
@@ -145,6 +148,15 @@ class PrettyNumModleForm(forms.ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs = {"class": "form-control", "placeholder": field.label}
+
+    ### 验证方式二 构造方法
+    def clean_mobile(self):
+        text_mobile = self.cleaned_data["mobile"]
+        if len(text_mobile) != 11:
+            # 验证不通过
+            raise ValidationError("格式错误")
+        #  验证通过 把用户输入的值返回
+        return text_mobile
 
 
 def pretty_add(request):
