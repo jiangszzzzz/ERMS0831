@@ -152,9 +152,15 @@ class PrettyNumModleForm(forms.ModelForm):
     ### 验证方式二 构造方法
     def clean_mobile(self):
         text_mobile = self.cleaned_data["mobile"]
+
+        # 验证是否为相同号码
+        exists = models.PrettyNum.objects.filter(mobile=text_mobile).exists()
+        if exists:
+            raise ValidationError("手机号已存在")
+
         if len(text_mobile) != 11:
             # 验证不通过
-            raise ValidationError("格式错误")
+            raise ValidationError("长度错误")
         #  验证通过 把用户输入的值返回
         return text_mobile
 
@@ -171,3 +177,59 @@ def pretty_add(request):
         return redirect('/pretty/list/')
 
     return render(request, "pretty_add.html", {"form": form})
+
+
+# 编辑 form 类
+class PrettyNumEidtModleForm(forms.ModelForm):
+    # mobile = forms.CharField(disabled=True, label="手机号")
+
+    mobile = forms.CharField(
+        label="手机号",
+        validators=[RegexValidator(r'^1[3-9]\d{9}$', '手机号格式错误')]
+    )
+
+    # 生成前端输入框
+    class Meta:
+        model = models.PrettyNum
+        fields = ["mobile", "price", "level", "status", ]
+
+    # 给前端加上样式
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs = {"class": "form-control", "placeholder": field.label}
+
+    #  验证是否为重复号码， 但是要排除自己   编辑和添加时候 条件是不一样的
+    def clean_mobile(self):
+        text_mobile = self.cleaned_data["mobile"]
+
+        # 验证是否为相同号码    但是要排除自己 .exclude()
+        exists = models.PrettyNum.objects.exclude(id=self.instance.pk).filter(mobile=text_mobile).exists()
+        if exists:
+            raise ValidationError("手机号已存在")
+
+        if len(text_mobile) != 11:
+            # 验证不通过
+            raise ValidationError("长度错误")
+        #  验证通过 把用户输入的值返回
+        return text_mobile
+
+
+def pretty_edit(request, nid):
+    row_object = models.PrettyNum.objects.filter(id=nid).first()
+
+    if request.method == "GET":
+        form = PrettyNumEidtModleForm(instance=row_object)
+        return render(request, "pretty_edit.html", {"form": form})
+
+    form = PrettyNumEidtModleForm(data=request.POST, instance=row_object)
+    if form.is_valid():
+        form.save()
+        return redirect('/pretty/list/')
+    return render(request, "pretty_edit.html", {"form": form})
+
+
+def pretty_delete(request, nid):
+    models.PrettyNum.objects.filter(id=nid).delete()
+    return redirect("/pretty/list/")
