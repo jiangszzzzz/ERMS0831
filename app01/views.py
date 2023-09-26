@@ -121,6 +121,13 @@ def user_delete(request, nid):
 
 
 def pretty_list(request):
+
+    # for i in range(10):
+    #     for j in range(10):
+    #         for k in range(5):
+    #             mobile = '18188886' + str(i) + str(j) + str(k)
+    #             models.PrettyNum.objects.create(mobile=mobile, price=10, level=1, status=1)
+
     # 相当于 select * from 表 order by level desc
 
     # queryset = models.PrettyNum.objects.all().order_by("-level")
