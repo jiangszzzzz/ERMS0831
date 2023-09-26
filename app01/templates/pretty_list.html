@@ -1,11 +1,24 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div style="margin-bottom: 20px">
+    <div style="margin-bottom: 20px" class=clearfix>
         <a class="btn btn-success" href="/pretty/add/">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             新建号码
         </a>
+
+        <div style="float: right ; width: 300px">
+            <form method="get">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search for..." value="{{ search_data }}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div><!-- /input-group -->
+            </form>
+        </div>
     </div>
 
     <div class="panel panel-default">

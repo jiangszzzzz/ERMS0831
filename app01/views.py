@@ -122,9 +122,18 @@ def user_delete(request, nid):
 
 def pretty_list(request):
     # 相当于 select * from 表 order by level desc
-    queryset = models.PrettyNum.objects.all().order_by("-level")
+
+    # queryset = models.PrettyNum.objects.all().order_by("-level")
     # queryset = models.PrettyNum.objects.all()
-    return render(request, "pretty_list.html", {"queryset": queryset})
+
+    # 搜索框
+    data_dict = {}
+    search_data = request.GET.get('q')
+    if search_data:
+        data_dict["mobile__contains"] = search_data
+    queryset = models.PrettyNum.objects.filter(**data_dict).order_by("-level")
+
+    return render(request, "pretty_list.html", {"queryset": queryset, "search_data": search_data}, )
 
 
 ############################## 靓号提交 先建form类
