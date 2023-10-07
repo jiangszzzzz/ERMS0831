@@ -47,7 +47,14 @@ def depart_edit(request, nid):
 
 def user_list(request):
     queryset = models.User_info.objects.all()
-    return render(request, "user_list.html", {"queryset": queryset})
+
+    page_object = Pagination(request, queryset,page_size=2)
+    context = {
+        "queryset":page_object.page_queryset,
+        "page_string":page_object.html()
+    }
+
+    return render(request, "user_list.html", context)
 
 
 # ##################################  modleForm 实现   ##################################

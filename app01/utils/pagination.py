@@ -103,47 +103,47 @@ class Pagination(object):
         self.query_dict.setlist(self.page_param, [1])
 
         # 首页
-        firstv = '<li><a href="/pretty/list/?{}">首 页</a></li>'.format(self.query_dict.urlencode())
+        firstv = '<li><a href="?{}">首 页</a></li>'.format(self.query_dict.urlencode())
         page_str_list.append(firstv)
 
         # 上一页
         if self.page > 1:
             self.query_dict.setlist(self.page_param, [self.page - 1])
-            prev = '<li><a href="/pretty/list/?{}">上一页</a></li>'.format(self.query_dict.urlencode())
+            prev = '<li><a href="?{}">上一页</a></li>'.format(self.query_dict.urlencode())
         else:
             self.query_dict.setlist(self.page_param, [1])
-            prev = '<li><a href="/pretty/list/?{}">上一页</a></li>'.format(self.query_dict.urlencode())
+            prev = '<li><a href="/?{}">上一页</a></li>'.format(self.query_dict.urlencode())
         page_str_list.append(prev)
 
         for i in range(start_page, end_page + 1):
             if i == self.page:
                 self.query_dict.setlist(self.page_param, [i])
-                ele = '<li class = "active"><a href="/pretty/list/?{}">{}</a></li>'.format(
+                ele = '<li class = "active"><a href="?{}">{}</a></li>'.format(
                     self.query_dict.urlencode(), i)
             else:
                 self.query_dict.setlist(self.page_param, [i])
-                ele = '<li><a href="/pretty/list/?{}">{}</a></li>'.format(self.query_dict.urlencode(), i)
+                ele = '<li><a href="?{}">{}</a></li>'.format(self.query_dict.urlencode(), i)
             page_str_list.append(ele)
 
         # 下一页
         if self.page < self.total_page_count:
             self.query_dict.setlist(self.page_param, [self.page + 1])
-            nextv = '<li><a href="/pretty/list/?{}">下一页</a></li>'.format(self.query_dict.urlencode())
+            nextv = '<li><a href="?{}">下一页</a></li>'.format(self.query_dict.urlencode())
         else:
             self.query_dict.setlist(self.page_param, [self.total_page_count])
-            nextv = '<li><a href="/pretty/list/?{}">下一页</a></li>'.format(self.query_dict.urlencode())
+            nextv = '<li><a href="?{}">下一页</a></li>'.format(self.query_dict.urlencode())
         page_str_list.append(nextv)
 
         # 尾页
         self.query_dict.setlist(self.page_param, [self.total_page_count])
-        lastv = '<li><a href="/pretty/list/?{}">尾 页</a></li>'.format(self.query_dict.urlencode())
+        lastv = '<li><a href="?{}">尾 页</a></li>'.format(self.query_dict.urlencode())
         page_str_list.append(lastv)
 
         '''
-        <li><a href="/pretty/list/?page=1">1</a></li>
-        <li><a href="/pretty/list/?page=2">2</a></li>
-        <li><a href="/pretty/list/?page=3">3</a></li>
-        <li><a href="/pretty/list/?page=4">4</a></li>
+        <li><a href="?page=1">1</a></li>
+        <li><a href="?page=2">2</a></li>
+        <li><a href="?page=3">3</a></li>
+        <li><a href="?page=4">4</a></li>
         <li><a href="?page=5">5</a></li>
         '''
 
