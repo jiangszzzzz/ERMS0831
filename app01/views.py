@@ -48,10 +48,10 @@ def depart_edit(request, nid):
 def user_list(request):
     queryset = models.User_info.objects.all()
 
-    page_object = Pagination(request, queryset,page_size=2)
+    page_object = Pagination(request, queryset, page_size=2)
     context = {
-        "queryset":page_object.page_queryset,
-        "page_string":page_object.html()
+        "queryset": page_object.page_queryset,  # 分完页之后的数据
+        "page_string": page_object.html()     # 页面中的页码
     }
 
     return render(request, "user_list.html", context)
