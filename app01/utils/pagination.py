@@ -112,7 +112,7 @@ class Pagination(object):
             prev = '<li><a href="?{}">上一页</a></li>'.format(self.query_dict.urlencode())
         else:
             self.query_dict.setlist(self.page_param, [1])
-            prev = '<li><a href="/?{}">上一页</a></li>'.format(self.query_dict.urlencode())
+            prev = '<li><a href="?{}">上一页</a></li>'.format(self.query_dict.urlencode())
         page_str_list.append(prev)
 
         for i in range(start_page, end_page + 1):
