@@ -39,9 +39,10 @@ def pretty_list(request):
 ############################## 靓号提交 先建form类
 
 def pretty_add(request):
+    title = "新建靓号"
     if request.method == "GET":
         form = PrettyNumModleForm()
-        return render(request, "pretty_add.html", {"form": form})
+        return render(request, "change.html", {"form": form, "title":title})
 
     form = PrettyNumModleForm(data=request.POST)
 
@@ -49,7 +50,7 @@ def pretty_add(request):
         form.save()
         return redirect('/pretty/list/')
 
-    return render(request, "pretty_add.html", {"form": form})
+    return render(request, "change.html", {"form": form, "title":title})
 
 
 # 编辑 form 类

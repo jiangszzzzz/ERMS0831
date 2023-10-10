@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 
 from app01.utils.bootstrap import BootstrapModleForm
+from app01.utils.encrypt import md5
 
 
 class UserModleForm(BootstrapModleForm):
@@ -74,3 +75,31 @@ class PrettyNumEidtModleForm(BootstrapModleForm):
             raise ValidationError("长度错误")
         #  验证通过 把用户输入的值返回
         return text_mobile
+
+
+class AdminModelForm(BootstrapModleForm):
+    confirm_password = forms.CharField(
+        label="确认密码",
+        widget=forms.PasswordInput(render_value=True),
+    )
+
+    class Meta:
+        model = models.Admin
+        fields = ["username", "password", "confirm_password"]
+        # 增加密码输入插件
+        widgets = {
+            "password": forms.PasswordInput(render_value=True),
+        }
+
+    def clean_password(self):
+        password = self.cleaned_data.get("password")
+        return md5(password)
+
+    def clean_confirm_password(self):
+        # print(self.cleaned_data)
+        # {'username': '李万', 'password': '123123', 'confirm_password': '123123'}
+        password = self.cleaned_data.get("password")
+        confirm_password = md5(self.cleaned_data.get("confirm_password"))
+        if password != confirm_password:
+            raise ValidationError("密码不一致")
+        return confirm_password
