@@ -103,3 +103,48 @@ class AdminModelForm(BootstrapModleForm):
         if password != confirm_password:
             raise ValidationError("密码不一致")
         return confirm_password
+
+
+class AdminEditModelForm(BootstrapModleForm):
+    class Meta:
+        model = models.Admin
+        # 不允许编辑密码 只允许编辑用户名
+        fields = ["username"]
+
+
+class AdminResetModelForm(BootstrapModleForm):
+    confirm_password = forms.CharField(
+        label="确认密码",
+        widget=forms.PasswordInput(render_value=True),
+    )
+
+    class Meta:
+        model = models.Admin
+        # 不允许编辑密码 只允许编辑用户名
+        fields = ["password"]
+        # 增加密码输入插件
+        widgets = {
+            "password": forms.PasswordInput(render_value=True),
+        }
+
+    def clean_password(self):
+        password = self.cleaned_data.get("password")
+        md5_password = md5(password)
+
+        # 实现修改密码时 不能与之前密码一致的校验
+
+        # self.instance 表示当前这个对象。 pk 表示 id
+        exists = models.Admin.objects.filter(id=self.instance.pk, password=md5_password).exists()
+
+        if exists:
+            raise ValidationError("不能与之前密码一致")
+        return md5_password
+
+    def clean_confirm_password(self):
+        # print(self.cleaned_data)
+        # {'username': '李万', 'password': '123123', 'confirm_password': '123123'}
+        password = self.cleaned_data.get("password")
+        confirm_password = md5(self.cleaned_data.get("confirm_password"))
+        if password != confirm_password:
+            raise ValidationError("密码不一致")
+        return confirm_password

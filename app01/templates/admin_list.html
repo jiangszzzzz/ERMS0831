@@ -36,6 +36,7 @@
                 <th>ID</th>
                 <th>用户名</th>
                 <th>密码</th>
+                <th>重置密码</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -45,11 +46,14 @@
                 <tr>
                     <td>{{ obj.id }}</td>
                     <td>{{ obj.username }}</td>
-                    <td>{{ obj.password }}</td>
+                    <td>***********</td>
                     <td>
-                        <a class="btn btn-primary btn-xs" href="#">编 辑</a>
+                        <a href="/admin/{{ obj.id }}/reset/">重置</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="/admin/{{ obj.id }}/edit/">编 辑</a>
                         {#                        <a class="btn btn-danger btn-xs" href="/user/delete/?nid={{ obj.id }}">删 除</a>#}
-                        <a class="btn btn-danger btn-xs" href="#">删 除</a>
+                        <a class="btn btn-danger btn-xs" href="/admin/{{ obj.id }}/delete/">删 除</a>
                     </td>
                 </tr>
             {% endfor %}
