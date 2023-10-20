@@ -14,7 +14,7 @@ def login(request):
         # 验证成功 获取到用户信息 form.cleaned_data
         # {'username': '123', 'password': 'cfdaf9256fd1262ab42bf8a3a573f338'}
         # 需要校验
-        print(form.cleaned_data)
+        # print(form.cleaned_data)
 
         # 去数据库校验用户和密码是否正确 获取用户对象
         admin_object = models.Admin.objects.filter(**form.cleaned_data).first()
