@@ -30,3 +30,8 @@ def login(request):
         return redirect('/admin/list/')
 
     return render(request, 'login.html', {"form": form})
+
+
+def logout(request):
+    request.session.clear()
+    return redirect("/login/")
