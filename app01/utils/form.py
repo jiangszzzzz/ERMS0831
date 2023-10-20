@@ -3,7 +3,7 @@ from django import forms
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 
-from app01.utils.bootstrap import BootstrapModleForm
+from app01.utils.bootstrap import BootstrapModleForm, BootstrapForm
 from app01.utils.encrypt import md5
 
 
@@ -148,3 +148,20 @@ class AdminResetModelForm(BootstrapModleForm):
         if password != confirm_password:
             raise ValidationError("密码不一致")
         return confirm_password
+
+
+# 用于 密码校验 不需要更新到数据库，所以用form
+# modelform 一般用于需要更新到数据库中
+class LoginForm(BootstrapForm):
+    username = forms.CharField(
+        label="用户名",
+        widget=forms.TextInput
+    )
+    password = forms.CharField(
+        label="密码",
+        widget=forms.PasswordInput
+    )
+
+    def clean_password(self):
+        pwd = self.cleaned_data.get("password")
+        return md5(pwd)  # return 修改原有的password值 即 用户的密码进行md hash
