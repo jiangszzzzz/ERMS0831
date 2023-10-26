@@ -161,6 +161,10 @@ class LoginForm(BootstrapForm):
         label="密码",
         widget=forms.PasswordInput
     )
+    code = forms.CharField(
+        label="验证码",
+        widget=forms.TextInput(attrs={'placeholder': '不区分大小写'}),
+    )
 
     def clean_password(self):
         pwd = self.cleaned_data.get("password")

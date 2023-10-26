@@ -2,7 +2,7 @@ import random
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 
-def check_code(width=120, height=30, char_length=5, font_file='Monaco.ttf', font_size=28):
+def check_code(width=120, height=30, char_length=3, font_file='Monaco.ttf', font_size=28):
     code = []
     img = Image.new(mode='RGB', size=(width, height), color=(255, 255, 255))
     draw = ImageDraw.Draw(img, mode='RGB')
@@ -55,13 +55,20 @@ def check_code(width=120, height=30, char_length=5, font_file='Monaco.ttf', font
 
 if __name__ == '__main__':
     # 1. 直接打开
-    img1, code_str = check_code()
-    img1.show()
+    # img1, code_str = check_code()
+    # img1.show()
 
-# 2. 写入文件
-# img,code = check_code()
-# with open('code.png','wb') as f:
-#     img.save(f,format='png')
+    # 2. 写入文件
+    img, code_str = check_code()
+    print(code_str)
+    with open('../static/img/code.png', 'wb') as f:
+        img.save(f, format='png')
+
+    # 批量产生文件
+    # for i in range(3):
+    #     img, code_str = check_code()
+    #     print(code_str)
+    #     img.save(f'image{code_str}.png', format='png')
 
 # 3. 写入内存(Python3)
 # from io import BytesIO

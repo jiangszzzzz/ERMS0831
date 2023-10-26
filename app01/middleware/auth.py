@@ -6,7 +6,7 @@ from django.shortcuts import HttpResponse, redirect
 class AuthMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
-        # 排除不需要登录就能访问的页面
+        # 排除不需要登录就能访问的页面  （登录页面， 验证码页面）
         # request.path_info 获取当前用户请求的 URL
         if request.path_info in ["/login/", "/image/code/"]:
             return

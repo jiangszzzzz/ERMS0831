@@ -26,8 +26,9 @@ class BootstrapForm(forms.Form):
         for name, field in self.fields.items():
             # 字段中有属性 保留 字段中没有属性 才添加
             if field.widget.attrs:
+                pass
                 field.widget.attrs["class"] = "form-control"
-                field.widget.attrs["placeholder"] = field.label
+                # field.widget.attrs["placeholder"] = field.label
             else:
                 field.widget.attrs = {
                     "class": "form-control",
